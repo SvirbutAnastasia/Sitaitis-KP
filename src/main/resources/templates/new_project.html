@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление проекта</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <h1>Мониторинг айти проектов</h1>
+    <hr>
+    <h2>Добавление проекта</h2>
+
+    <form action="#" th:action="@{/saveProject}" th:object="${project}"
+          method="POST">
+        <input type="text" th:field="*{name}"
+               placeholder="Название проекта" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{readyPercent}"
+               placeholder="Процент готовности проекта" class="form-control mb-4 col-4" min="0" max="100" maxlength="3"
+               pattern="^([0-9]|[1-9][0-9]|100)$">
+
+        <input type="text"  th:field="*{FIOEmployee}" th:list="listUser"
+               class="form-control mb-4 col-4"
+               autocomplete="off" required placeholder="ФИО сотрудника" />
+
+        <datalist id="listUser" th:object="${user}" >
+            <option th:each="user:${listUser}" th:text="${user.FIO}"></option>
+        </datalist>
+
+        <button type="submit" class="btn btn-info col-2, but"> Добавить проект</button>
+    </form>
+
+    <hr>
+
+    <a th:href = "@{/projects/}"> Вернуться к списку проектов</a>
+</div>
+</body>
+</html>

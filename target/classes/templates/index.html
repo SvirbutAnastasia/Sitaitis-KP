@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Главная</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+</head>
+<body>
+
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" th:href="@{/}">Мониторинг айти проектов проектов</a>
+            <button sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Выйти из аккаунта</a></button>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+
+<!--                <button sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Выйти из аккаунта</a></button>-->
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+    <h2 sec:authorize="hasAnyAuthority('ROLE_USER')" style="margin-top: 100px">Система приветствует пользователя!</h2>
+<h2 sec:authorize="hasAnyAuthority('ROLE_ADMIN')">Система приветствует администратора!</h2>
+<!--<div id="pos">-->
+
+
+
+    <table border="1" class = "table table-striped table-responsive-md" style="background-color: white">
+        <thead>
+        <tr>
+            <th>
+                <a href="/monitorings/">Мониторинг</a>
+                <p>Описание</p>
+            </th>
+            <th>
+                <a href="/analysts/">Аналитики</a>
+                <p>Описание</p>
+            </th>
+            <th>
+                <a href="/projects/">Проекты</a>
+                <p>Описание</p>
+            </th>
+            <th>
+                <a href="/users/">Сотрудники</a>
+                <p>Описание</p>
+            </th>
+<!--            <th>-->
+<!--                <a href="equipments/">Оборудование</a>-->
+<!--                <p>Описание</p>-->
+<!--            </th>-->
+<!--            <th>-->
+<!--                <a href="realties/">Недвижимость</a>-->
+<!--                <p>Описание</p>-->
+<!--            </th>-->
+<!--            <th>-->
+<!--                <a href="rentalOperations/">Арендные операции</a>-->
+<!--                <p>Описание</p>-->
+<!--            </th>-->
+<!--            <th>-->
+<!--                <a href="users/">Пользователи</a>-->
+<!--                <p>Описание</p>-->
+<!--            </th>-->
+        </tr>
+        </thead>
+
+    </table>
+
+    </div>
+</body>
+
+

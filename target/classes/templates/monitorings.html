@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Мониторинг</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+</head>
+<body>
+
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+
+            <a class="navbar-brand" href="#" th:href="@{/}">Мониторинг айти проектов</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Выйти из аккаунта</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+<div class="container my-2">
+    <h1>Список мониторинга</h1>
+
+    <a th:href = "@{/showNewMonitoringForm}" class="btn btn-primary btn-sm mb-3"> Добавить мониторинг </a>
+
+    <form th:action="@{/find/monitoring}" class="margin">
+        Фильтр: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+        &nbsp;
+        <input type="submit" value="Поиск" />
+        &nbsp;
+        <input type="button" value="Очистить" id="btnClear" onclick="clearSearch()"   />
+    </form>
+
+    <table border="1" class = "table table-striped table-responsive-md margin" style="background-color: white">
+        <thead>
+        <tr>
+            <th>
+                <a th:href="@{'/monitorings/page/' + ${currentPage} + '?sortField=FIOAnalyst&sortDir=' + ${reverseSortDir}}">
+                    ФИО аналитика</a>
+            </th>
+            <th>
+                <a th:href="@{'/monitorings/page/' + ${currentPage} + '?sortField=projectName&sortDir=' + ${reverseSortDir}}">
+                    Название проекта</a>
+            </th>
+            <th>
+                <a th:href="@{'/monitorings/page/' + ${currentPage} + '?sortField=risk&sortDir=' + ${reverseSortDir}}">
+                    Риски</a>
+            </th>
+            <th sec:authorize="hasAnyAuthority('ROLE_ADMIN')" class="wid" style="width: 190px"> Действия </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="monitoring : ${listMonitorings}">
+            <td th:text="${monitoring.FIOAnalyst}"></td>
+            <td th:text="${monitoring.projectName}"></td>
+            <td th:text="${monitoring.risk}"></td>
+            <td sec:authorize="hasAnyAuthority('ROLE_ADMIN')"> <a th:href="@{/showFormForMonitoringUpdate/{id}(id=${monitoring.id})}" class="btn btn-primary">Обновить</a>
+                <a th:href="@{/deleteMonitoring/{id}(id=${monitoring.id})}" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if = "${totalPages > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                 Количество записей: [[${totalItems}]]
+            </div>
+            <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/monitorings/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/monitorings/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Следующая</a>
+                <span th:unless="${currentPage < totalPages}">Следующая</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/monitorings/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" style="margin-left: 20px">Последняя</a>
+                <span th:unless="${currentPage < totalPages}" style="margin-left: 20px">Последняя</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title> Обновление пользователя </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+
+    </head>
+    <body>
+        <div class="container">
+            <h1> Мониторинг айти проектов </h1>
+            <hr>
+            <h2> Обновление пользователя </h2>
+            <form action="#" th:action="@{/saveUser}" th:object="${user}" method="post">
+                <input type="hidden" th:field="*{id}" />
+                <input type="text" th:field="*{FIO}" placeholder="ФИО сотрудника" class="form-control mb-4 col-4">
+                <input type="text" th:field="*{post}" placeholder="Занимаемая должность" class="form-control mb-4 col-4">
+                <input type="text" th:field="*{email}" placeholder="Почта" class="form-control mb-4 col-4">
+                <button type="submit" class="btn btn-info col-2, but" > Обновить пользователя</button>
+            </form>
+            <hr>
+            <a th:href="@{/users/}"> Вернуться к списку пользователей</a>
+        </div>
+    </body>
+</html>

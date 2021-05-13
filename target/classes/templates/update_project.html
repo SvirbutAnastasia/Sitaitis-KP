@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Обновление проекта</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <h1>Мониторинг айти проектов</h1>
+    <hr>
+    <h2>Обновление проекта</h2>
+
+    <form action="#" th:action="@{/saveProject}" th:object="${project}"
+          method="POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{id}" />
+
+        <input type="text" th:field="*{name}" class="form-control mb-4 col-4" placeholder="Название проекта">
+
+        <input type="text" th:field="*{readyPercent}" class="form-control mb-4 col-4" placeholder="Процент готовности">
+
+        <input type="text"  th:field="*{FIOEmployee}" th:list="listUser"
+               class="form-control mb-4 col-4"
+               autocomplete="off" required placeholder="ФИО работника" />
+
+        <datalist id="listUser" th:object="${user}" >
+            <option th:each="project:${listUser}" th:text="${user.FIO}"></option>
+        </datalist>
+
+
+        <button type="submit" class="btn btn-info col-2, but">Обновить проект</button>
+    </form>
+
+    <hr>
+
+    <a th:href = "@{/rentalOperations/}"> Вернуться к списку проектов </a>
+</div>
+</body>
+</html>
